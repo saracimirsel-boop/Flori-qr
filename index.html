@@ -1,17 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="sq">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Flori Saraci</title>
     <style>
-        body { margin: 0; padding: 0; background: #000; text-align: center; color: white; }
-        video, img { width: 100%; height: auto; display: block; margin-bottom: 2px; }
-        .container { display: flex; flex-direction: column; }
+        /* Ky rregull fsheh çdo gjë tjetër dhe mban vetëm fotot/videot */
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            background: #000; 
+            width: 100%; 
+            overflow-x: hidden;
+            color: white;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        img, video {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <video id="vid" controls autoplay muted loop playsinline style="display:none;">
+    <div class="content">
+        <video id="v" controls autoplay muted loop playsinline style="display:none;">
             <source src="video.mp4" type="video/mp4">
         </video>
 
@@ -21,10 +41,9 @@
     </div>
 
     <script>
-        // Ky kod kontrollon nëse videoja ekziston dhe e shfaq atë
-        var v = document.getElementById('vid');
-        v.addEventListener('loadeddata', function() {
-            v.style.display = 'block';
+        var vid = document.getElementById('v');
+        vid.addEventListener('loadeddata', function() {
+            vid.style.display = 'block';
         }, false);
     </script>
 </body>
