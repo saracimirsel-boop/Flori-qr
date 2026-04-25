@@ -2,49 +2,26 @@
 <html lang="sq">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Flori Saraci</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria Ime</title>
     <style>
-        /* Ky rregull fsheh çdo gjë tjetër dhe mban vetëm fotot/videot */
-        body, html { 
-            margin: 0; 
-            padding: 0; 
-            background: #000; 
-            width: 100%; 
-            overflow-x: hidden;
-            color: white;
-        }
-        .content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-        img, video {
-            width: 100%;
-            height: auto;
-            display: block;
-            margin: 0;
-            padding: 0;
-        }
+        body { font-family: sans-serif; text-align: center; background: #f4f4f4; padding: 20px; }
+        img, video { max-width: 90%; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
     </style>
 </head>
 <body>
-    <div class="content">
-        <video id="v" controls autoplay muted loop playsinline style="display:none;">
-            <source src="video.mp4" type="video/mp4">
-        </video>
 
-        <img src="foto.jpg" onerror="this.style.display='none'">
-        <img src="foto2.jpg" onerror="this.style.display='none'">
-        <img src="foto3.jpg" onerror="this.style.display='none'">
-    </div>
+    <h1>Galeria e Florit</h1>
 
-    <script>
-        var vid = document.getElementById('v');
-        vid.addEventListener('loadeddata', function() {
-            vid.style.display = 'block';
-        }, false);
-    </script>
+    <img src="foto.jpg" alt="Foto 1">
+
+    <img src="foto1.jpg" alt="Foto 2">
+
+    <video controls>
+        <source src="video.mp4" type="video/mp4">
+        Browseri juaj nuk e mbështet videon.
+    </video>
+
 </body>
 </html>
