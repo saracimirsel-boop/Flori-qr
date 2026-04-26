@@ -6,39 +6,21 @@
     <title>Galeria e Florit</title>
     <style>
         body { margin: 0; padding: 20px; background: #000; color: white; font-family: sans-serif; text-align: center; }
-        h1 { margin-bottom: 25px; font-weight: 300; }
         .container { max-width: 600px; margin: auto; display: flex; flex-direction: column; gap: 15px; }
-        img, video { width: 100%; border-radius: 10px; display: block; box-shadow: 0 4px 15px rgba(255,255,255,0.1); }
-        /* Fsheh skedarët që nuk janë ngarkuar ende */
-        .hidden { display: none !important; }
+        img, video { width: 100%; border-radius: 10px; display: none; }
     </style>
 </head>
 <body>
-
     <h1>Galeria e Florit</h1>
-
     <div class="container">
-        <video id="v1" controls autoplay muted loop playsinline class="hidden">
-            <source src="video.mp4" type="video/mp4">
-        </video>
-
-        <img src="foto1.jpg" class="hidden" onload="this.classList.remove('hidden')">
-        <img src="foto2.jpg" class="hidden" onload="this.classList.remove('hidden')">
-        <img src="foto3.jpg" class="hidden" onload="this.classList.remove('hidden')">
-        <img src="foto4.jpg" class="hidden" onload="this.classList.remove('hidden')">
-        <img src="foto5.jpg" class="hidden" onload="this.classList.remove('hidden')">
-        <img src="foto6.jpg" class="hidden" onload="this.classList.remove('hidden')">
-        <img src="foto7.jpg" class="hidden" onload="this.classList.remove('hidden')">
-        <img src="foto8.jpg" class="hidden" onload="this.classList.remove('hidden')">
-        <img src="foto9.jpg" class="hidden" onload="this.classList.remove('hidden')">
-        <img src="foto10.jpg" class="hidden" onload="this.classList.remove('hidden')">
+        <video id="v" controls autoplay muted loop playsinline src="video.mp4" onloadeddata="this.style.display='block'"></video>
+        
+        <img src="foto.jpg" onload="this.style.display='block'">
+        <img src="foto1.jpg" onload="this.style.display='block'">
+        <img src="foto2.jpg" onload="this.style.display='block'">
+        <img src="foto3.jpg" onload="this.style.display='block'">
+        <img src="foto4.jpg" onload="this.style.display='block'">
+        <img src="foto5.jpg" onload="this.style.display='block'">
     </div>
-
-    <script>
-        // Kontrolli special për videon
-        var v = document.getElementById('v1');
-        v.onloadeddata = function() { v.classList.remove('hidden'); };
-    </script>
-
 </body>
 </html>
