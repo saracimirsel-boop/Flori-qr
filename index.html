@@ -1,31 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="sq">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria e Florit</title>
     <style>
-        body { background-color: #f9f9f9; font-family: sans-serif; margin: 0; padding: 20px; text-align: center; }
-        h1 { color: #333; margin-bottom: 30px; }
-        .gallery-container { max-width: 500px; margin: auto; }
-        img { width: 100%; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        .info { background: white; padding: 20px; border-radius: 12px; margin-top: 10px; }
+        body { margin: 0; padding: 20px; background: #000; color: white; font-family: sans-serif; text-align: center; }
+        h1 { margin-bottom: 25px; font-weight: 300; }
+        .container { max-width: 600px; margin: auto; display: flex; flex-direction: column; gap: 15px; }
+        img, video { width: 100%; border-radius: 10px; display: block; box-shadow: 0 4px 15px rgba(255,255,255,0.1); }
+        /* Fsheh skedarët që nuk janë ngarkuar ende */
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
     <h1>Galeria e Florit</h1>
 
-    <div class="gallery-container">
-        <img src="foto1.jpg" onerror="this.style.display='none'">
-        
-        <img src="foto2.jpg" onerror="this.style.display='none'">
+    <div class="container">
+        <video id="v1" controls autoplay muted loop playsinline class="hidden">
+            <source src="video.mp4" type="video/mp4">
+        </video>
 
-        <div class="info">
-            <h2>FLORI SARACI</h2>
-            <p><b>11/10/2008 - 03/04/2026</b></p>
-            <hr>
-            <p>Ti ike herët o shpirtit jon... do të jesh gjithmonë në zemrën tonë.</p>
-        </div>
+        <img src="foto1.jpg" class="hidden" onload="this.classList.remove('hidden')">
+        <img src="foto2.jpg" class="hidden" onload="this.classList.remove('hidden')">
+        <img src="foto3.jpg" class="hidden" onload="this.classList.remove('hidden')">
+        <img src="foto4.jpg" class="hidden" onload="this.classList.remove('hidden')">
+        <img src="foto5.jpg" class="hidden" onload="this.classList.remove('hidden')">
+        <img src="foto6.jpg" class="hidden" onload="this.classList.remove('hidden')">
+        <img src="foto7.jpg" class="hidden" onload="this.classList.remove('hidden')">
+        <img src="foto8.jpg" class="hidden" onload="this.classList.remove('hidden')">
+        <img src="foto9.jpg" class="hidden" onload="this.classList.remove('hidden')">
+        <img src="foto10.jpg" class="hidden" onload="this.classList.remove('hidden')">
     </div>
+
+    <script>
+        // Kontrolli special për videon
+        var v = document.getElementById('v1');
+        v.onloadeddata = function() { v.classList.remove('hidden'); };
+    </script>
 
 </body>
 </html>
