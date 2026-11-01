@@ -6,26 +6,54 @@
     <title>Galeria e Florit</title>
     <style>
         body { margin: 0; padding: 20px; background: #000; color: white; font-family: sans-serif; text-align: center; }
-        .container { max-width: 600px; margin: auto; display: flex; flex-direction: column; gap: 15px; }
-        h1 { font-size: 24px; margin-bottom: 20px; }
-        img, audio { width: 100%; border-radius: 10px; }
-        img { display: none; }
-        .audio-box { margin-bottom: 15px; }
+        .container { max-width: 600px; margin: auto; display: flex; flex-direction: column; gap: 20px; }
+        h1 { font-size: 26px; margin-bottom: 5px; color: #fff; text-shadow: 0 2px 4px rgba(255,255,255,0.2); }
+        .dedication { font-style: italic; color: #ddd; font-size: 15px; margin-bottom: 15px; }
+        
+        /* Stili dhe efektet e fotove */
+        img {
+            width: 100%;
+            border-radius: 20px; /* Rrumbullakim më i butë dhe më i dukshëm i qosheve */
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15); /* Hije elegante rreth fotos */
+            transition: transform 0.4s ease, box-shadow 0.4s ease; /* Lëvizje e butë */
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* Efekti kur prek foton ose kalon mausin */
+        img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Efekti i shfaqjes së bukur (fade-in) kur ngarkohet fotoja */
+        img.loaded {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        audio { width: 100%; border-radius: 12px; }
+        .audio-box { margin-bottom: 10px; }
     </style>
 </head>
 <body>
     <h1>Galeria e Florit</h1>
+    <div class="dedication">Kujtimet më të bukura, të përjetësuara me dashuri...</div>
+    
     <div class="container">
-        <!-- Kutia e Muzikes me Autoplay -->
+        <!-- Kutia e Muzikes -->
         <div class="audio-box">
             <audio controls autoplay src="flori.mp3"></audio>
         </div>
 
-        <!-- Fotot e ngarkuara -->
-        <img src="foto.jpg" onload="this.style.display='block'">
-        <img src="foto1.jpg" onload="this.style.display='block'">
-        <img src="foto2.jpg" onload="this.style.display='block'">
-        <img src="foto3.jpg" onload="this.style.display='block'">
+        <!-- Fotot me efekte pamore -->
+        <img src="foto.jpg" onload="this.classList.add('loaded')">
+        <img src="foto1.jpg" onload="this.classList.add('loaded')">
+        <img src="foto2.jpg" onload="this.classList.add('loaded')">
+        <img src="foto3.jpg" onload="this.classList.add('loaded')">
     </div>
 </body>
 </html>
