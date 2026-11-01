@@ -34,7 +34,7 @@
         audio { width: 100%; border-radius: 12px; }
         .audio-box { margin-bottom: 10px; }
 
-        /* Stili për seksionin e lojës */
+        /* Stili për lojën interaktive me prekje */
         .game-box {
             background: #111;
             border: 2px solid #333;
@@ -43,26 +43,36 @@
             margin-top: 10px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.5);
         }
+        .game-target {
+            font-size: 40px;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.1s;
+            display: inline-block;
+            margin: 15px;
+            padding: 10px;
+            background: #222;
+            border-radius: 15px;
+        }
+        .game-target:active {
+            transform: scale(0.8);
+        }
         .game-btn {
-            background: #ffc107;
+            background: #00ff88;
             color: #000;
             border: none;
-            padding: 12px 25px;
-            font-size: 18px;
+            padding: 10px 20px;
+            font-size: 16px;
             font-weight: bold;
-            border-radius: 50px;
+            border-radius: 30px;
             cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 4px 15px rgba(255,193,7,0.4);
             margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(0,255,136,0.3);
         }
-        .game-btn:active {
-            transform: scale(0.95);
-        }
-        .score {
-            font-size: 20px;
+        .stats {
+            font-size: 18px;
             margin-top: 10px;
-            color: #ffc107;
+            color: #00ff88;
         }
     </style>
 </head>
@@ -82,20 +92,57 @@
         <img src="foto2.jpg" onload="this.classList.add('loaded')">
         <img src="foto3.jpg" onload="this.classList.add('loaded')">
 
-        <!-- Seksioni i Lojës -->
+        <!-- Seksioni i Lojës Interaktive -->
         <div class="game-box">
-            <h3>🎮 Loja e Reagimit</h3>
-            <p style="font-size: 14px; color: #aaa;">Kliko sa më shpejt te butoni për të mbledhur pikë!</p>
-            <button class="game-btn" onclick="shtoPike()">Kliko Këtu!</button>
-            <div class="score">Pikët: <span id="piket">0</span></div>
+            <h3>🎯 Kap Simbolin!</h3>
+            <p style="font-size: 14px; color: #aaa;">Prek simbolin që ndizet sa më shpejt për të fituar pikë!</p>
+            <div id="targetArea">
+                <span class="game-target" onclick="prekSimbolin()">⭐</span>
+            </div>
+            <button class="game-btn" onclick="nisLojen()">Fillo Lojën</button>
+            <div class="stats">Pikët: <span id="gameScore">0</span> | Koha: <span id="timeLeft">15</span>s</div>
         </div>
     </div>
 
     <script>
-        let counter = 0;
-        function shtoPike() {
-            counter++;
-            document.getElementById("piket").innerText = counter;
+        let score = 0;
+        let timeLeft = 15;
+        let gameInterval;
+        let isPlaying = false;
+        const symbols = ['⭐', '❤️', '🔥', '💎', '🚀', '👑'];
+
+        function nisLojen() {
+            if (isPlaying) return;
+            isPlaying = true;
+            score = 0;
+            timeLeft = 15;
+            document.getElementById("gameScore").innerText = score;
+            document.getElementById("timeLeft").innerText = timeLeft;
+            
+            ndryshoPozicionin();
+
+            gameInterval = setInterval(function() {
+                timeLeft--;
+                document.getElementById("timeLeft").innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(gameInterval);
+                    isPlaying = false;
+                    alert("Koha mbaroi! Pikët e tua totale janë: " + score);
+                }
+            }, 1000);
+        }
+
+        function prekSimbolin() {
+            if (!isPlaying) return;
+            score++;
+            document.getElementById("gameScore").innerText = score;
+            ndryshoPozicionin();
+        }
+
+        function ndryshoPozicionin() {
+            const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+            const targetArea = document.getElementById("targetArea");
+            targetArea.innerHTML = `<span class="game-target" onclick="prekSimbolin()">${randomSymbol}</span>`;
         }
     </script>
 </body>
