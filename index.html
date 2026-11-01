@@ -13,21 +13,17 @@
         /* Stili dhe efektet e fotove */
         img {
             width: 100%;
-            border-radius: 20px; /* Rrumbullakim më i butë dhe më i dukshëm i qosheve */
-            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15); /* Hije elegante rreth fotos */
-            transition: transform 0.4s ease, box-shadow 0.4s ease; /* Lëvizje e butë */
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
             display: none;
             opacity: 0;
             transform: translateY(20px);
         }
-
-        /* Efekti kur prek foton ose kalon mausin */
         img:hover {
             transform: scale(1.03);
             box-shadow: 0 12px 30px rgba(255, 255, 255, 0.3);
         }
-
-        /* Efekti i shfaqjes së bukur (fade-in) kur ngarkohet fotoja */
         img.loaded {
             display: block;
             opacity: 1;
@@ -37,6 +33,37 @@
 
         audio { width: 100%; border-radius: 12px; }
         .audio-box { margin-bottom: 10px; }
+
+        /* Stili për seksionin e lojës */
+        .game-box {
+            background: #111;
+            border: 2px solid #333;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+        .game-btn {
+            background: #ffc107;
+            color: #000;
+            border: none;
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 15px rgba(255,193,7,0.4);
+            margin-top: 10px;
+        }
+        .game-btn:active {
+            transform: scale(0.95);
+        }
+        .score {
+            font-size: 20px;
+            margin-top: 10px;
+            color: #ffc107;
+        }
     </style>
 </head>
 <body>
@@ -54,6 +81,22 @@
         <img src="foto1.jpg" onload="this.classList.add('loaded')">
         <img src="foto2.jpg" onload="this.classList.add('loaded')">
         <img src="foto3.jpg" onload="this.classList.add('loaded')">
+
+        <!-- Seksioni i Lojës -->
+        <div class="game-box">
+            <h3>🎮 Loja e Reagimit</h3>
+            <p style="font-size: 14px; color: #aaa;">Kliko sa më shpejt te butoni për të mbledhur pikë!</p>
+            <button class="game-btn" onclick="shtoPike()">Kliko Këtu!</button>
+            <div class="score">Pikët: <span id="piket">0</span></div>
+        </div>
     </div>
+
+    <script>
+        let counter = 0;
+        function shtoPike() {
+            counter++;
+            document.getElementById("piket").innerText = counter;
+        }
+    </script>
 </body>
 </html>
