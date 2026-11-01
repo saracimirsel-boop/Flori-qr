@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="sq">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galeria e Florit</title>
+ <title>Galeria e Florit</title>
     <style>
-        body { margin: 0; padding: 20px; background: #000; color: white; font-family: sans-serif; }
+        body { margin: 0; padding: 20px; background: #000; color: white; font-family: sans-serif; text-align: center; }
         .container { max-width: 600px; margin: auto; display: flex; flex-direction: column; gap: 15px; }
+        h1 { font-size: 24px; margin-bottom: 20px; }
         img, video { width: 100%; border-radius: 10px; display: none; }
     </style>
 </head>
