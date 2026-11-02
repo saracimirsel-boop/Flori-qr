@@ -34,7 +34,7 @@
         audio { width: 100%; border-radius: 12px; }
         .audio-box { margin-bottom: 10px; }
 
-        /* Stili origjinal për Portën dhe Fushën */
+        /* Stili për Lojërat */
         .game-box {
             background: linear-gradient(135deg, #051923, #003554, #006494);
             border: 2px solid #00ff88;
@@ -46,7 +46,6 @@
         .goal-field {
             background: radial-gradient(circle, #2a9d8f 0%, #114b3e 100%);
             border: 4px solid #fff;
-            border-bottom: 4px solid #fff;
             height: 180px;
             border-radius: 15px 15px 0 0;
             position: relative;
@@ -54,69 +53,65 @@
             margin-bottom: 15px;
             box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
         }
-        /* Rrjeta e portës stil i integruar */
         .goal-net {
             position: absolute;
-            top: 0;
-            left: 10%;
-            right: 10%;
-            height: 90px;
+            top: 0; left: 10%; right: 10%; height: 90px;
             border: 2px dashed rgba(255, 255, 255, 0.4);
             border-top: none;
             background-image: linear-gradient(0deg, transparent 95%, rgba(255,255,255,0.15) 95%),
                               linear-gradient(90deg, transparent 95%, rgba(255,255,255,0.15) 95%);
             background-size: 15px 15px;
         }
-        .goalie {
-            font-size: 40px;
-            position: absolute;
-            top: 35px;
-            left: 45%;
-            transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+        .goalie { font-size: 40px; position: absolute; top: 35px; left: 45%; transition: left 0.25s ease; }
+        .ball { font-size: 32px; position: absolute; bottom: 15px; left: 45%; transition: bottom 0.35s ease, left 0.35s ease; }
+        
+        /* Stili për Lojën e F1 */
+        .f1-field {
+            background: #111;
+            border: 4px solid #ff1801;
+            height: 170px;
+            border-radius: 15px 15px 0 0;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 15px;
+            box-shadow: inset 0 0 25px rgba(0,0,0,0.9);
         }
-        .ball {
-            font-size: 32px;
+        .f1-road {
             position: absolute;
-            bottom: 15px;
-            left: 45%;
-            transition: bottom 0.35s ease, left 0.35s ease, transform 0.35s ease;
-            filter: drop-shadow(0 5px 8px rgba(0,0,0,0.7));
-            cursor: pointer;
+            top: 0; bottom: 0; left: 50%;
+            width: 6px;
+            background: repeating-linear-gradient(to bottom, #ff1801, #ff1801 25px, #fff 25px, #fff 40px);
         }
+        .f1-car {
+            font-size: 38px;
+            position: absolute;
+            bottom: 10px;
+            left: 45%;
+            transition: left 0.2s ease;
+        }
+        .f1-rival {
+            font-size: 38px;
+            position: absolute;
+            top: -45px;
+            left: 45%;
+        }
+
         .message-box {
             position: absolute;
-            top: 45%;
-            left: 50%;
+            top: 45%; left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 22px;
-            font-weight: bold;
-            color: #fff;
+            font-size: 20px; font-weight: bold; color: #fff;
             text-shadow: 0 2px 8px rgba(0,0,0,0.9);
-            display: none;
-            z-index: 10;
+            display: none; z-index: 10;
         }
         .game-btn {
-            background: #00ff88;
-            color: #000;
-            border: none;
-            padding: 12px 22px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 30px;
-            cursor: pointer;
+            background: #00ff88; color: #000; border: none;
+            padding: 10px 18px; font-size: 15px; font-weight: bold;
+            border-radius: 30px; cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,255,136,0.4);
-            transition: 0.2s;
         }
-        .game-btn:active {
-            transform: scale(0.95);
-        }
-        .stats {
-            font-size: 18px;
-            margin-top: 12px;
-            color: #00ff88;
-            font-weight: bold;
-        }
+        .f1-btn { background: #ff1801; color: #fff; box-shadow: 0 4px 15px rgba(255,24,1,0.5); }
+        .stats { font-size: 17px; margin-top: 10px; color: #00ff88; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -135,78 +130,82 @@
         <img src="foto2.jpg" onload="this.classList.add('loaded')">
         <img src="foto3.jpg" onload="this.classList.add('loaded')">
 
-        <!-- Seksioni i Lojës së Golave (Versioni Origjinal) -->
+        <!-- Lojë 1: Gjuajtje në Portë -->
         <div class="game-box">
             <h3>⚽ Gjuajtje në Portë</h3>
-            <p style="font-size: 13px; color: #ddd; margin-bottom: 12px;">Zgjidh drejtimin dhe mposht portierin!</p>
-            
-            <div class="goal-field" id="field">
+            <div class="goal-field">
                 <div class="goal-net"></div>
                 <div class="goalie" id="goalie">🤸‍♂️</div>
                 <div class="ball" id="ball">⚽</div>
                 <div class="message-box" id="msgBox"></div>
             </div>
-
-            <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 10px;">
-                <button class="game-btn" onclick="gjuaj(15)">Majtas 👈</button>
-                <button class="game-btn" onclick="gjuaj(45)">Mes 🎯</button>
-                <button class="game-btn" onclick="gjuaj(75)">Djathtas 👉</button>
+            <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 8px;">
+                <button class="game-btn" onclick="gjuaj(15)">Majtas</button>
+                <button class="game-btn" onclick="gjuaj(45)">Mes</button>
+                <button class="game-btn" onclick="gjuaj(75)">Djathtas</button>
             </div>
-
             <div class="stats">Gola: <span id="goals">0</span> | Gjuajtje: <span id="shots">0</span></div>
+        </div>
+
+        <!-- Lojë 2: Gara me Formula 1 -->
+        <div class="game-box" style="border-color: #ff1801; background: linear-gradient(135deg, #1a0000, #330000, #4d0000);">
+            <h3 style="color: #ff1801;">🏎️ Gara Formula 1</h3>
+            <div class="f1-field">
+                <div class="f1-road"></div>
+                <div class="f1-rival" id="rivalCar">🏎️</div>
+                <div class="f1-car" id="myF1Car">🏎️🔥</div>
+                <div class="message-box" id="f1Msg"></div>
+            </div>
+            <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 8px;">
+                <button class="game-btn f1-btn" onclick="moveF1(20)">⬅️ Majtas</button>
+                <button class="game-btn f1-btn" onclick="moveF1(50)">Turbo 🚀</button>
+                <button class="game-btn f1-btn" onclick="moveF1(80)">Djathtas ➡️</button>
+            </div>
+            <div class="stats" style="color: #ff1801;">Pikë F1: <span id="f1Score">0</span></div>
         </div>
     </div>
 
     <script>
-        let goals = 0;
-        let shots = 0;
-
+        // Kodi i Futbollit
+        let goals = 0, shots = 0;
         function gjuaj(direction) {
             shots++;
             const ball = document.getElementById("ball");
             const goalie = document.getElementById("goalie");
             const msgBox = document.getElementById("msgBox");
-
-            // Lëviz topin drejt portës me rrotullim
-            ball.style.bottom = "110px";
-            ball.style.left = direction + "%";
-            ball.style.transform = "rotate(360deg)";
-
-            // Reagimi i portierit
+            ball.style.bottom = "110px"; ball.style.left = direction + "%";
             let goaliePos = Math.random() < 0.33 ? 18 : (Math.random() < 0.66 ? 45 : 72);
-            goalie.style.left = goaliePos + "%";
-            
-            // Ndrysho pamjen e portierit kur hidhet
-            goalie.innerText = "🧤🦸‍♂️";
-
+            goalie.style.left = goaliePos + "%"; goalie.innerText = "🧤🦸‍♂️";
             setTimeout(() => {
-                if (Math.abs(direction - goaliePos) > 12) {
-                    goals++;
-                    msgBox.innerText = "GOOOOL! ⚽🔥";
-                    msgBox.style.color = "#00ff88";
-                } else {
-                    msgBox.innerText = "Pritje fantastike! 🧤";
-                    msgBox.style.color = "#ff4d4d";
-                }
-                
+                if (Math.abs(direction - goaliePos) > 12) { goals++; msgBox.innerText = "GOOOOL! ⚽🔥"; msgBox.style.color = "#00ff88"; }
+                else { msgBox.innerText = "Pritje! 🧤"; msgBox.style.color = "#ff4d4d"; }
                 msgBox.style.display = "block";
-
-                // Përditëso pikët
                 document.getElementById("goals").innerText = goals;
                 document.getElementById("shots").innerText = shots;
-
-                // Kthe topin dhe portierin në pozicionin fillestar pas 1 sekondi
-                setTimeout(() => {
-                    msgBox.style.display = "none";
-                    ball.style.bottom = "15px";
-                    ball.style.left = "45%";
-                    ball.style.transform = "rotate(0deg)";
-                    goalie.style.left = "45%";
-                    goalie.innerText = "🤸‍♂️";
-                }, 1000);
-
+                setTimeout(() => { msgBox.style.display = "none"; ball.style.bottom = "15px"; ball.style.left = "45%"; goalie.style.left = "45%"; goalie.innerText = "🤸‍♂️"; }, 1000);
             }, 350);
+        }
+
+        // Kodi i Formula 1
+        let f1Score = 0;
+        function moveF1(pos) {
+            f1Score += 15;
+            const myF1Car = document.getElementById("myF1Car");
+            const rivalCar = document.getElementById("rivalCar");
+
+            myF1Car.style.left = pos + "%";
+            
+            let rivalPos = Math.random() < 0.33 ? 20 : (Math.random() < 0.66 ? 50 : 80);
+            rivalCar.style.left = rivalPos + "%";
+            rivalCar.style.top = "120px";
+
+            document.getElementById("f1Score").innerText = f1Score;
+
+            setTimeout(() => {
+                rivalCar.style.top = "-45px";
+            }, 300);
         }
     </script>
 </body>
 </html>
+
