@@ -5,113 +5,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galeria e Florit</title>
     <style>
-        body { margin: 0; padding: 20px; background: #000; color: white; font-family: sans-serif; text-align: center; }
+        body { margin: 0; padding: 15px; background: #000; color: white; font-family: monospace; text-align: center; }
         .container { max-width: 600px; margin: auto; display: flex; flex-direction: column; gap: 20px; }
-        h1 { font-size: 26px; margin-bottom: 5px; color: #fff; text-shadow: 0 2px 4px rgba(255,255,255,0.2); }
-        .dedication { font-style: italic; color: #ddd; font-size: 15px; margin-bottom: 15px; }
+        h1 { font-size: 24px; margin-bottom: 5px; color: #fff; text-shadow: 0 2px 4px rgba(255,255,255,0.2); font-family: sans-serif; }
+        .dedication { font-style: italic; color: #ddd; font-size: 15px; margin-bottom: 10px; font-family: sans-serif; }
         
-        /* Stili dhe efektet e fotove */
+        /* Stili i fotove */
         img {
-            width: 100%;
-            border-radius: 20px;
+            width: 100%; border-radius: 20px;
             box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            display: none;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        img:hover {
-            transform: scale(1.03);
-            box-shadow: 0 12px 30px rgba(255, 255, 255, 0.3);
-        }
-        img.loaded {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
+            display: none; opacity: 0; transform: translateY(20px);
             transition: opacity 0.8s ease, transform 0.8s ease;
         }
+        img.loaded { display: block; opacity: 1; transform: translateY(0); }
 
         audio { width: 100%; border-radius: 12px; }
         .audio-box { margin-bottom: 10px; }
 
-        /* Stili për Lojërat */
+        /* Stili Retro F1 (Pole Position Style) */
         .game-box {
-            background: linear-gradient(135deg, #051923, #003554, #006494);
-            border: 2px solid #00ff88;
-            border-radius: 20px;
-            padding: 20px;
-            margin-top: 10px;
-            box-shadow: 0 8px 25px rgba(0,255,136,0.2);
+            background: #111;
+            border: 3px solid #333;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.8);
         }
+        /* Paneli lart si në lojën klasike */
+        .retro-dashboard {
+            background: #000;
+            border: 2px solid #555;
+            color: #0ff;
+            padding: 8px;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .retro-screen {
+            background: #228b22; /* Fusha e gjelbër */
+            height: 240px;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #444;
+        }
+        .retro-sky {
+            position: absolute;
+            top: 0; width: 100%; height: 40%;
+            background: #5090ff; /* Qielli blu */
+        }
+        .retro-mountains {
+            position: absolute;
+            top: 30%; width: 100%; height: 10%;
+            background: #3b7a57; /* Kodrat në sfond */
+            clip-path: polygon(0% 100%, 10% 40%, 25% 90%, 40% 20%, 60% 80%, 75% 30%, 90% 90%, 100% 50%, 100% 100%);
+        }
+        .retro-road {
+            position: absolute;
+            bottom: 0; width: 100%; height: 60%;
+            background: #555; /* Rruga gri */
+            clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+        }
+        .road-stripe {
+            position: absolute;
+            top: 0; left: 49%; width: 2%; height: 100%;
+            background: #fff;
+            clip-path: polygon(40% 0%, 60% 0%, 100% 100%, 0% 100%);
+        }
+        .retro-car {
+            position: absolute;
+            bottom: 15px; left: 45%;
+            font-size: 35px;
+            transition: left 0.15s ease;
+            z-index: 5;
+        }
+        .retro-enemy {
+            position: absolute;
+            top: 50%; left: 48%;
+            font-size: 25px;
+            transition: top 0.2s linear, left 0.2s linear;
+            z-index: 4;
+        }
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .retro-btn {
+            background: #ffcc00;
+            color: #000;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255,204,0,0.4);
+        }
+        .retro-btn:active { transform: scale(0.95); }
+
+        /* Futbolli */
         .goal-field {
             background: radial-gradient(circle, #2a9d8f 0%, #114b3e 100%);
-            border: 4px solid #fff;
-            height: 180px;
-            border-radius: 15px 15px 0 0;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 15px;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
+            border: 4px solid #fff; height: 160px; border-radius: 10px;
+            position: relative; overflow: hidden; margin-bottom: 10px;
         }
-        .goal-net {
-            position: absolute;
-            top: 0; left: 10%; right: 10%; height: 90px;
-            border: 2px dashed rgba(255, 255, 255, 0.4);
-            border-top: none;
-            background-image: linear-gradient(0deg, transparent 95%, rgba(255,255,255,0.15) 95%),
-                              linear-gradient(90deg, transparent 95%, rgba(255,255,255,0.15) 95%);
-            background-size: 15px 15px;
-        }
-        .goalie { font-size: 40px; position: absolute; top: 35px; left: 45%; transition: left 0.25s ease; }
-        .ball { font-size: 32px; position: absolute; bottom: 15px; left: 45%; transition: bottom 0.35s ease, left 0.35s ease; }
-        
-        /* Stili për Lojën e F1 */
-        .f1-field {
-            background: #111;
-            border: 4px solid #ff1801;
-            height: 170px;
-            border-radius: 15px 15px 0 0;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 15px;
-            box-shadow: inset 0 0 25px rgba(0,0,0,0.9);
-        }
-        .f1-road {
-            position: absolute;
-            top: 0; bottom: 0; left: 50%;
-            width: 6px;
-            background: repeating-linear-gradient(to bottom, #ff1801, #ff1801 25px, #fff 25px, #fff 40px);
-        }
-        .f1-car {
-            font-size: 38px;
-            position: absolute;
-            bottom: 10px;
-            left: 45%;
-            transition: left 0.2s ease;
-        }
-        .f1-rival {
-            font-size: 38px;
-            position: absolute;
-            top: -45px;
-            left: 45%;
-        }
-
-        .message-box {
-            position: absolute;
-            top: 45%; left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 20px; font-weight: bold; color: #fff;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.9);
-            display: none; z-index: 10;
-        }
-        .game-btn {
-            background: #00ff88; color: #000; border: none;
-            padding: 10px 18px; font-size: 15px; font-weight: bold;
-            border-radius: 30px; cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,255,136,0.4);
-        }
-        .f1-btn { background: #ff1801; color: #fff; box-shadow: 0 4px 15px rgba(255,24,1,0.5); }
-        .stats { font-size: 17px; margin-top: 10px; color: #00ff88; font-weight: bold; }
+        .goalie { font-size: 35px; position: absolute; top: 30px; left: 45%; }
+        .ball { font-size: 28px; position: absolute; bottom: 10px; left: 45%; transition: 0.3s; }
+        .match-btn { background: #00ff88; border: none; padding: 10px 20px; font-weight: bold; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -119,93 +124,94 @@
     <div class="dedication">Kujtimet më të bukura, të përjetësuara me dashuri...</div>
     
     <div class="container">
-        <!-- Kutia e Muzikes -->
+        <!-- Muzika -->
         <div class="audio-box">
             <audio controls autoplay src="flori.mp3"></audio>
         </div>
 
-        <!-- Fotot me efekte pamore -->
+        <!-- Fotot -->
         <img src="foto.jpg" onload="this.classList.add('loaded')">
         <img src="foto1.jpg" onload="this.classList.add('loaded')">
         <img src="foto2.jpg" onload="this.classList.add('loaded')">
         <img src="foto3.jpg" onload="this.classList.add('loaded')">
 
-        <!-- Lojë 1: Gjuajtje në Portë -->
+        <!-- Lojë 1: F1 Retro Style -->
         <div class="game-box">
-            <h3>⚽ Gjuajtje në Portë</h3>
-            <div class="goal-field">
-                <div class="goal-net"></div>
-                <div class="goalie" id="goalie">🤸‍♂️</div>
-                <div class="ball" id="ball">⚽</div>
-                <div class="message-box" id="msgBox"></div>
+            <h3 style="color: #ffcc00; margin-top:0;">🏎️ F1 Retro Race</h3>
+            
+            <!-- Paneli lart fiks si në foto -->
+            <div class="retro-dashboard">
+                <div>312 KM/H</div>
+                <div>TIME <span id="gameTime">42</span></div>
+                <div>SCORE <span id="gameScore">600</span></div>
             </div>
-            <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 8px;">
-                <button class="game-btn" onclick="gjuaj(15)">Majtas</button>
-                <button class="game-btn" onclick="gjuaj(45)">Mes</button>
-                <button class="game-btn" onclick="gjuaj(75)">Djathtas</button>
+
+            <div class="retro-screen">
+                <div class="retro-sky"></div>
+                <div class="retro-mountains"></div>
+                <div class="retro-road"><div class="road-stripe"></div></div>
+                <div class="retro-enemy" id="enemyF1">🏎️</div>
+                <div class="retro-car" id="myF1">🏎️</div>
             </div>
-            <div class="stats">Gola: <span id="goals">0</span> | Gjuajtje: <span id="shots">0</span></div>
+
+            <div class="game-controls">
+                <button class="retro-btn" onclick="steerF1(-15)">◀ MAJTAS</button>
+                <button class="retro-btn" onclick="steerF1(15)">DJATHTAS ▶</button>
+            </div>
         </div>
 
-        <!-- Lojë 2: Gara me Formula 1 -->
-        <div class="game-box" style="border-color: #ff1801; background: linear-gradient(135deg, #1a0000, #330000, #4d0000);">
-            <h3 style="color: #ff1801;">🏎️ Gara Formula 1</h3>
-            <div class="f1-field">
-                <div class="f1-road"></div>
-                <div class="f1-rival" id="rivalCar">🏎️</div>
-                <div class="f1-car" id="myF1Car">🏎️🔥</div>
-                <div class="message-box" id="f1Msg"></div>
+        <!-- Lojë 2: Gjuajtje në Portë -->
+        <div class="game-box" style="border-color: #00ff88;">
+            <h3 style="color: #00ff88; margin-top:0;">⚽ Gjuajtje në Portë</h3>
+            <div class="goal-field">
+                <div class="goalie" id="goalie">🤸‍♂️</div>
+                <div class="ball" id="ball">⚽</div>
             </div>
-            <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 8px;">
-                <button class="game-btn f1-btn" onclick="moveF1(20)">⬅️ Majtas</button>
-                <button class="game-btn f1-btn" onclick="moveF1(50)">Turbo 🚀</button>
-                <button class="game-btn f1-btn" onclick="moveF1(80)">Djathtas ➡️</button>
+            <div style="display: flex; justify-content: center; gap: 8px;">
+                <button class="match-btn" onclick="gjuaj(15)">Majtas</button>
+                <button class="match-btn" onclick="gjuaj(45)">Mes</button>
+                <button class="match-btn" onclick="gjuaj(75)">Djathtas</button>
             </div>
-            <div class="stats" style="color: #ff1801;">Pikë F1: <span id="f1Score">0</span></div>
+            <div style="margin-top: 8px; color: #00ff88; font-weight: bold;">Gola: <span id="goals">0</span></div>
         </div>
     </div>
 
     <script>
-        // Kodi i Futbollit
-        let goals = 0, shots = 0;
-        function gjuaj(direction) {
-            shots++;
-            const ball = document.getElementById("ball");
-            const goalie = document.getElementById("goalie");
-            const msgBox = document.getElementById("msgBox");
-            ball.style.bottom = "110px"; ball.style.left = direction + "%";
-            let goaliePos = Math.random() < 0.33 ? 18 : (Math.random() < 0.66 ? 45 : 72);
-            goalie.style.left = goaliePos + "%"; goalie.innerText = "🧤🦸‍♂️";
-            setTimeout(() => {
-                if (Math.abs(direction - goaliePos) > 12) { goals++; msgBox.innerText = "GOOOOL! ⚽🔥"; msgBox.style.color = "#00ff88"; }
-                else { msgBox.innerText = "Pritje! 🧤"; msgBox.style.color = "#ff4d4d"; }
-                msgBox.style.display = "block";
-                document.getElementById("goals").innerText = goals;
-                document.getElementById("shots").innerText = shots;
-                setTimeout(() => { msgBox.style.display = "none"; ball.style.bottom = "15px"; ball.style.left = "45%"; goalie.style.left = "45%"; goalie.innerText = "🤸‍♂️"; }, 1000);
-            }, 350);
+        // Logjika e F1 Retro
+        let f1Pos = 45;
+        let score = 600;
+        function steerF1(val) {
+            f1Pos += val;
+            if(f1Pos < 20) f1Pos = 20;
+            if(f1Pos > 70) f1Pos = 70;
+            document.getElementById("myF1").style.left = f1Pos + "%";
+            
+            score += 50;
+            document.getElementById("gameScore").innerText = score;
+            
+            // Lëviz makinën armike në drejtim të rastësishëm
+            let enemy = document.getElementById("enemyF1");
+            let randomLeft = Math.floor(Math.random() * 50) + 25;
+            enemy.style.left = randomLeft + "%";
+            enemy.style.top = "60%";
+            setTimeout(() => { enemy.style.top = "45%"; }, 200);
         }
 
-        // Kodi i Formula 1
-        let f1Score = 0;
-        function moveF1(pos) {
-            f1Score += 15;
-            const myF1Car = document.getElementById("myF1Car");
-            const rivalCar = document.getElementById("rivalCar");
-
-            myF1Car.style.left = pos + "%";
+        // Logjika e Futbollit
+        let goals = 0;
+        function gjuaj(dir) {
+            const ball = document.getElementById("ball");
+            const goalie = document.getElementById("goalie");
+            ball.style.bottom = "100px";
+            ball.style.left = dir + "%";
             
-            let rivalPos = Math.random() < 0.33 ? 20 : (Math.random() < 0.66 ? 50 : 80);
-            rivalCar.style.left = rivalPos + "%";
-            rivalCar.style.top = "120px";
-
-            document.getElementById("f1Score").innerText = f1Score;
-
             setTimeout(() => {
-                rivalCar.style.top = "-45px";
-            }, 300);
+                goals++;
+                document.getElementById("goals").innerText = goals;
+                ball.style.bottom = "10px";
+                ball.style.left = "45%";
+            }, 400);
         }
     </script>
 </body>
 </html>
-
