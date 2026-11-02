@@ -21,91 +21,60 @@
         audio { width: 100%; border-radius: 12px; }
         .audio-box { margin-bottom: 10px; }
 
-        /* Stili fiks si loja retro e F1 */
+        /* Stili i lojës Retro Duck Hunt (Stili nga fotoja) */
         .game-box {
-            background: #000;
+            background: #111;
             border: 3px solid #555;
             border-radius: 15px;
             padding: 12px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.9);
         }
-        /* Pulti i zi lart me shpejtësinë, kohën dhe hartën */
-        .arcade-dashboard {
-            background: #000;
+        .duck-screen {
+            background: #5090ff; /* Qielli blu klasik i Duck Hunt */
+            height: 230px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
             border: 2px solid #333;
-            color: #fff;
-            padding: 8px 5px;
-            font-size: 12px;
+            cursor: crosshair;
+        }
+        .duck-bush {
+            position: absolute; bottom: 0; width: 100%; height: 45%;
+            background: #228b22; /* Ferra dhe bari i gjelbër */
+            border-top: 5px solid #145a14;
+        }
+        .duck-tree {
+            position: absolute; bottom: 40%; left: 15%;
+            width: 30px; height: 70px;
+            background: #8b4513; /* Druri i pemës */
+        }
+        .duck-tree-leaves {
+            position: absolute; bottom: 65%; left: 5%;
+            width: 70px; height: 50px; background: #228b22;
+            border-radius: 50%;
+            box-shadow: 20px -10px 0 #228b22;
+        }
+        /* Rosa që fluturon */
+        .duck-target {
+            position: absolute;
+            top: 40px; left: 50px;
+            font-size: 35px;
+            cursor: pointer;
+            transition: top 0.4s ease, left 0.4s ease;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.6));
+        }
+        .duck-dashboard {
+            background: #000;
+            border: 2px solid #444;
+            color: #ffcc00;
+            padding: 8px;
+            font-size: 14px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: space-around;
             border-radius: 5px;
             margin-bottom: 8px;
             font-weight: bold;
         }
-        .speed-display { color: #ff3333; font-size: 16px; }
-        .map-box {
-            width: 60px; height: 25px;
-            border: 1px solid #ff5555;
-            border-radius: 4px;
-            position: relative;
-            background: #111;
-        }
-        .map-dot {
-            width: 5px; height: 5px; background: #fff;
-            border-radius: 50%; position: absolute; top: 10px; left: 20px;
-        }
-
-        .arcade-screen {
-            background: #228b22; /* Fusha jeshile */
-            height: 240px;
-            border-radius: 8px;
-            position: relative;
-            overflow: hidden;
-            border: 2px solid #444;
-        }
-        .arcade-sky {
-            position: absolute; top: 0; width: 100%; height: 35%;
-            background: #5090ff; /* Qielli blu */
-        }
-        .arcade-mountains {
-            position: absolute; top: 22%; width: 100%; height: 18%;
-            background: #2c5e3b;
-            clip-path: polygon(0% 100%, 15% 20%, 30% 90%, 50% 10%, 70% 80%, 85% 30%, 100% 70%, 100% 100%);
-        }
-        .arcade-road {
-            position: absolute; bottom: 0; width: 100%; height: 65%;
-            background: #555; /* Rruga gri me kthesë */
-            clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
-        }
-        .road-center-stripe {
-            position: absolute; top: 0; left: 49%; width: 2%; height: 100%;
-            background: #fff;
-            clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
-        }
-        .arcade-car {
-            position: absolute; bottom: 12px; left: 45%;
-            font-size: 34px;
-            z-index: 5;
-            transition: left 0.1s ease-out;
-            filter: drop-shadow(0 3px 4px rgba(0,0,0,0.8));
-        }
-        .arcade-enemy {
-            position: absolute; top: 45%; left: 48%;
-            font-size: 24px;
-            z-index: 4;
-            transition: top 0.2s linear, left 0.2s linear;
-        }
-        .arcade-controls {
-            display: flex; justify-content: center; gap: 20px; margin-top: 12px;
-        }
-        .arcade-btn {
-            background: #ffcc00; color: #000; border: none;
-            padding: 12px 35px; font-size: 15px; font-weight: bold;
-            border-radius: 6px; cursor: pointer;
-            box-shadow: 0 4px 10px rgba(255,204,0,0.4);
-        }
-        .arcade-btn:active { transform: scale(0.93); background: #e6b800; }
 
         /* Futbolli */
         .goal-field {
@@ -134,30 +103,26 @@
         <img src="foto2.jpg" onload="this.classList.add('loaded')">
         <img src="foto3.jpg" onload="this.classList.add('loaded')">
 
-        <!-- Lojë F1 Klasike (Ekzakt si në imazh) -->
-        <div class="game-box">
-            <div class="arcade-dashboard">
-                <div>LOW &nbsp; <span class="speed-display"><span id="speedVal">372</span> KM/H</span></div>
-                <div>TIME<br><span id="gameTime" style="color:#ffcc00; font-size:14px;">42</span></div>
-                <div>SCORE<br><span id="gameScore" style="color:#0ff; font-size:14px;">600</span></div>
-                <div class="map-box"><div class="map-dot" id="mapDot"></div></div>
+        <!-- Lojë 1: Duck Hunt Retro (Si në foto) -->
+        <div class="game-box" style="border-color: #ffcc00;">
+            <h3 style="color: #ffcc00; margin-top:0; font-family:sans-serif; font-size:16px;">🦆 DUCK HUNT RETRO</h3>
+            
+            <div class="duck-dashboard">
+                <div>PIKË: <span id="duckScore">0</span></div>
+                <div>PLUMBA: <span id="bullets">5</span> 🎯</div>
             </div>
 
-            <div class="arcade-screen">
-                <div class="arcade-sky"></div>
-                <div class="arcade-mountains"></div>
-                <div class="arcade-road"><div class="road-center-stripe"></div></div>
-                <div class="arcade-enemy" id="rivalCar">🏎️</div>
-                <div class="arcade-car" id="playerCar">🏎️</div>
+            <div class="duck-screen">
+                <div class="duck-tree"></div>
+                <div class="duck-tree-leaves"></div>
+                <div class="duck-bush"></div>
+                <!-- Rosa që preket -->
+                <div class="duck-target" id="duck" onclick="goditRosen()">🦆</div>
             </div>
-
-            <div class="arcade-controls">
-                <button class="arcade-btn" onclick="driveF1(-12)">◄ MAJTAS</button>
-                <button class="arcade-btn" onclick="driveF1(12)">DJATHTAS ►</button>
-            </div>
+            <p style="font-size: 12px; color: #aaa; margin-top: 8px; font-family:sans-serif;">Prek rosën fluturuese sa më shpejt për të fituar pikë!</p>
         </div>
 
-        <!-- Lojë Futbolli -->
+        <!-- Lojë 2: Gjuajtje në Portë -->
         <div class="game-box" style="border-color: #00ff88;">
             <h3 style="color: #00ff88; margin-top:0; font-family:sans-serif; font-size:16px;">⚽ Gjuajtje në Portë</h3>
             <div class="goal-field">
@@ -174,34 +139,38 @@
     </div>
 
     <script>
-        let carLeft = 45;
-        let score = 600;
-        let timeSec = 42;
-        let speed = 372;
+        // Logjika e Duck Hunt
+        let duckScore = 0;
+        let bullets = 5;
 
-        function driveF1(val) {
-            carLeft += val;
-            if(carLeft < 20) carLeft = 20;
-            if(carLeft > 70) carLeft = 70;
-            document.getElementById("playerCar").style.left = carLeft + "%";
+        function goditRosen() {
+            duckScore += 100;
+            document.getElementById("duckScore").innerText = duckScore;
             
-            score += 25;
-            speed = Math.floor(Math.random() * 20) + 360;
-            document.getElementById("gameScore").innerText = score;
-            document.getElementById("speedVal").innerText = speed;
+            // Rosë e kapur (ndryshon ikonën në shenjë se u qëllua)
+            const duck = document.getElementById("duck");
+            duck.innerText = "💥🦆";
             
-            // Lëviz makinën armike dhe pikën në hartë
-            let rival = document.getElementById("rivalCar");
-            let randPos = Math.floor(Math.random() * 40) + 30;
-            rival.style.left = randPos + "%";
-            rival.style.top = "55%";
-            
-            let mapDot = document.getElementById("mapDot");
-            mapDot.style.left = (parseInt(mapDot.style.left || 20) + 3) % 45 + "px";
-
-            setTimeout(() => { rival.style.top = "45%"; }, 180);
+            setTimeout(() => {
+                // Lëviz në një pozicion të ri në ekran në mënyrë të rastësishme
+                let randomTop = Math.floor(Math.random() * 100) + 20;
+                let randomLeft = Math.floor(Math.random() * 75) + 10;
+                duck.style.top = randomTop + "px";
+                duck.style.left = randomLeft + "%";
+                duck.innerText = "🦆";
+            }, 350);
         }
 
+        // Lëvizje automatike e rosës herë pas here që të jetë më argëtuese
+        setInterval(() => {
+            const duck = document.getElementById("duck");
+            let randomTop = Math.floor(Math.random() * 100) + 20;
+            let randomLeft = Math.floor(Math.random() * 75) + 10;
+            duck.style.top = randomTop + "px";
+            duck.style.left = randomLeft + "%";
+        }, 2000);
+
+        // Logjika e Futbollit
         let goals = 0;
         function gjuaj(dir) {
             const ball = document.getElementById("ball");
