@@ -34,9 +34,9 @@
         audio { width: 100%; border-radius: 12px; }
         .audio-box { margin-bottom: 10px; }
 
-        /* Stili për Lojën e Golave */
+        /* Stili origjinal për Portën dhe Fushën */
         .game-box {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background: linear-gradient(135deg, #051923, #003554, #006494);
             border: 2px solid #00ff88;
             border-radius: 20px;
             padding: 20px;
@@ -44,44 +44,76 @@
             box-shadow: 0 8px 25px rgba(0,255,136,0.2);
         }
         .goal-field {
-            background: #1e7e34;
-            border: 3px solid #fff;
-            border-bottom: none;
-            height: 140px;
+            background: radial-gradient(circle, #2a9d8f 0%, #114b3e 100%);
+            border: 4px solid #fff;
+            border-bottom: 4px solid #fff;
+            height: 180px;
             border-radius: 15px 15px 0 0;
             position: relative;
             overflow: hidden;
             margin-bottom: 15px;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
+        }
+        /* Rrjeta e portës stil i integruar */
+        .goal-net {
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 90px;
+            border: 2px dashed rgba(255, 255, 255, 0.4);
+            border-top: none;
+            background-image: linear-gradient(0deg, transparent 95%, rgba(255,255,255,0.15) 95%),
+                              linear-gradient(90deg, transparent 95%, rgba(255,255,255,0.15) 95%);
+            background-size: 15px 15px;
         }
         .goalie {
-            font-size: 35px;
+            font-size: 40px;
             position: absolute;
-            top: 20px;
+            top: 35px;
             left: 45%;
-            transition: left 0.3s ease;
+            transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
         }
         .ball {
-            font-size: 30px;
+            font-size: 32px;
             position: absolute;
-            bottom: 10px;
+            bottom: 15px;
             left: 45%;
+            transition: bottom 0.35s ease, left 0.35s ease, transform 0.35s ease;
+            filter: drop-shadow(0 5px 8px rgba(0,0,0,0.7));
             cursor: pointer;
-            transition: bottom 0.4s ease, left 0.4s ease;
+        }
+        .message-box {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+            display: none;
+            z-index: 10;
         }
         .game-btn {
             background: #00ff88;
             color: #000;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 22px;
             font-size: 16px;
             font-weight: bold;
             border-radius: 30px;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,255,136,0.4);
+            transition: 0.2s;
+        }
+        .game-btn:active {
+            transform: scale(0.95);
         }
         .stats {
             font-size: 18px;
-            margin-top: 10px;
+            margin-top: 12px;
             color: #00ff88;
             font-weight: bold;
         }
@@ -103,14 +135,16 @@
         <img src="foto2.jpg" onload="this.classList.add('loaded')">
         <img src="foto3.jpg" onload="this.classList.add('loaded')">
 
-        <!-- Seksioni i Lojës së Golave -->
+        <!-- Seksioni i Lojës së Golave (Versioni Origjinal) -->
         <div class="game-box">
-            <h3>⚽ Gjuajtje në Portë (Penalty)</h3>
-            <p style="font-size: 13px; color: #ddd; margin-bottom: 10px;">Zgjidh se ku dëshiron të gjuash dhe shëno gol!</p>
+            <h3>⚽ Gjuajtje në Portë</h3>
+            <p style="font-size: 13px; color: #ddd; margin-bottom: 12px;">Zgjidh drejtimin dhe mposht portierin!</p>
             
             <div class="goal-field" id="field">
-                <div class="goalie" id="goalie">🥅🤖</div>
+                <div class="goal-net"></div>
+                <div class="goalie" id="goalie">🤸‍♂️</div>
                 <div class="ball" id="ball">⚽</div>
+                <div class="message-box" id="msgBox"></div>
             </div>
 
             <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 10px;">
@@ -131,31 +165,47 @@
             shots++;
             const ball = document.getElementById("ball");
             const goalie = document.getElementById("goalie");
+            const msgBox = document.getElementById("msgBox");
 
-            // Lëviz topin drejt goditjes
-            ball.style.bottom = "90px";
+            // Lëviz topin drejt portës me rrotullim
+            ball.style.bottom = "110px";
             ball.style.left = direction + "%";
+            ball.style.transform = "rotate(360deg)";
 
-            // Portieri lëviz lëviz kuturu
-            let goaliePos = Math.random() < 0.33 ? 15 : (Math.random() < 0.66 ? 45 : 75);
+            // Reagimi i portierit
+            let goaliePos = Math.random() < 0.33 ? 18 : (Math.random() < 0.66 ? 45 : 72);
             goalie.style.left = goaliePos + "%";
+            
+            // Ndrysho pamjen e portierit kur hidhet
+            goalie.innerText = "🧤🦸‍♂️";
 
             setTimeout(() => {
-                if (Math.abs(direction - goaliePos) > 10) {
+                if (Math.abs(direction - goaliePos) > 12) {
                     goals++;
-                    alert("GOOOOL! ⚽🔥 Shënove!");
+                    msgBox.innerText = "GOOOOL! ⚽🔥";
+                    msgBox.style.color = "#00ff88";
                 } else {
-                    alert("Pritje nga portieri! 🧤 Dyqani u mbyll!");
+                    msgBox.innerText = "Pritje fantastike! 🧤";
+                    msgBox.style.color = "#ff4d4d";
                 }
+                
+                msgBox.style.display = "block";
 
                 // Përditëso pikët
                 document.getElementById("goals").innerText = goals;
                 document.getElementById("shots").innerText = shots;
 
-                // Kthe topin në vend
-                ball.style.bottom = "10px";
-                ball.style.left = "45%";
-            }, 400);
+                // Kthe topin dhe portierin në pozicionin fillestar pas 1 sekondi
+                setTimeout(() => {
+                    msgBox.style.display = "none";
+                    ball.style.bottom = "15px";
+                    ball.style.left = "45%";
+                    ball.style.transform = "rotate(0deg)";
+                    goalie.style.left = "45%";
+                    goalie.innerText = "🤸‍♂️";
+                }, 1000);
+
+            }, 350);
         }
     </script>
 </body>
