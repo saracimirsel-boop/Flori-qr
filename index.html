@@ -34,28 +34,39 @@
         audio { width: 100%; border-radius: 12px; }
         .audio-box { margin-bottom: 10px; }
 
-        /* Stili për lojën interaktive me prekje */
+        /* Stili për Lojën e Golave */
         .game-box {
-            background: #111;
-            border: 2px solid #333;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            border: 2px solid #00ff88;
             border-radius: 20px;
             padding: 20px;
             margin-top: 10px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 8px 25px rgba(0,255,136,0.2);
         }
-        .game-target {
-            font-size: 40px;
+        .goal-field {
+            background: #1e7e34;
+            border: 3px solid #fff;
+            border-bottom: none;
+            height: 140px;
+            border-radius: 15px 15px 0 0;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .goalie {
+            font-size: 35px;
+            position: absolute;
+            top: 20px;
+            left: 45%;
+            transition: left 0.3s ease;
+        }
+        .ball {
+            font-size: 30px;
+            position: absolute;
+            bottom: 10px;
+            left: 45%;
             cursor: pointer;
-            user-select: none;
-            transition: transform 0.1s;
-            display: inline-block;
-            margin: 15px;
-            padding: 10px;
-            background: #222;
-            border-radius: 15px;
-        }
-        .game-target:active {
-            transform: scale(0.8);
+            transition: bottom 0.4s ease, left 0.4s ease;
         }
         .game-btn {
             background: #00ff88;
@@ -66,13 +77,13 @@
             font-weight: bold;
             border-radius: 30px;
             cursor: pointer;
-            margin-top: 10px;
-            box-shadow: 0 4px 15px rgba(0,255,136,0.3);
+            box-shadow: 0 4px 15px rgba(0,255,136,0.4);
         }
         .stats {
             font-size: 18px;
             margin-top: 10px;
             color: #00ff88;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -92,57 +103,59 @@
         <img src="foto2.jpg" onload="this.classList.add('loaded')">
         <img src="foto3.jpg" onload="this.classList.add('loaded')">
 
-        <!-- Seksioni i Lojës Interaktive -->
+        <!-- Seksioni i Lojës së Golave -->
         <div class="game-box">
-            <h3>🎯 Kap Simbolin!</h3>
-            <p style="font-size: 14px; color: #aaa;">Prek simbolin që ndizet sa më shpejt për të fituar pikë!</p>
-            <div id="targetArea">
-                <span class="game-target" onclick="prekSimbolin()">⭐</span>
+            <h3>⚽ Gjuajtje në Portë (Penalty)</h3>
+            <p style="font-size: 13px; color: #ddd; margin-bottom: 10px;">Zgjidh se ku dëshiron të gjuash dhe shëno gol!</p>
+            
+            <div class="goal-field" id="field">
+                <div class="goalie" id="goalie">🥅🤖</div>
+                <div class="ball" id="ball">⚽</div>
             </div>
-            <button class="game-btn" onclick="nisLojen()">Fillo Lojën</button>
-            <div class="stats">Pikët: <span id="gameScore">0</span> | Koha: <span id="timeLeft">15</span>s</div>
+
+            <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 10px;">
+                <button class="game-btn" onclick="gjuaj(15)">Majtas 👈</button>
+                <button class="game-btn" onclick="gjuaj(45)">Mes 🎯</button>
+                <button class="game-btn" onclick="gjuaj(75)">Djathtas 👉</button>
+            </div>
+
+            <div class="stats">Gola: <span id="goals">0</span> | Gjuajtje: <span id="shots">0</span></div>
         </div>
     </div>
 
     <script>
-        let score = 0;
-        let timeLeft = 15;
-        let gameInterval;
-        let isPlaying = false;
-        const symbols = ['⭐', '❤️', '🔥', '💎', '🚀', '👑'];
+        let goals = 0;
+        let shots = 0;
 
-        function nisLojen() {
-            if (isPlaying) return;
-            isPlaying = true;
-            score = 0;
-            timeLeft = 15;
-            document.getElementById("gameScore").innerText = score;
-            document.getElementById("timeLeft").innerText = timeLeft;
-            
-            ndryshoPozicionin();
+        function gjuaj(direction) {
+            shots++;
+            const ball = document.getElementById("ball");
+            const goalie = document.getElementById("goalie");
 
-            gameInterval = setInterval(function() {
-                timeLeft--;
-                document.getElementById("timeLeft").innerText = timeLeft;
-                if (timeLeft <= 0) {
-                    clearInterval(gameInterval);
-                    isPlaying = false;
-                    alert("Koha mbaroi! Pikët e tua totale janë: " + score);
+            // Lëviz topin drejt goditjes
+            ball.style.bottom = "90px";
+            ball.style.left = direction + "%";
+
+            // Portieri lëviz lëviz kuturu
+            let goaliePos = Math.random() < 0.33 ? 15 : (Math.random() < 0.66 ? 45 : 75);
+            goalie.style.left = goaliePos + "%";
+
+            setTimeout(() => {
+                if (Math.abs(direction - goaliePos) > 10) {
+                    goals++;
+                    alert("GOOOOL! ⚽🔥 Shënove!");
+                } else {
+                    alert("Pritje nga portieri! 🧤 Dyqani u mbyll!");
                 }
-            }, 1000);
-        }
 
-        function prekSimbolin() {
-            if (!isPlaying) return;
-            score++;
-            document.getElementById("gameScore").innerText = score;
-            ndryshoPozicionin();
-        }
+                // Përditëso pikët
+                document.getElementById("goals").innerText = goals;
+                document.getElementById("shots").innerText = shots;
 
-        function ndryshoPozicionin() {
-            const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
-            const targetArea = document.getElementById("targetArea");
-            targetArea.innerHTML = `<span class="game-target" onclick="prekSimbolin()">${randomSymbol}</span>`;
+                // Kthe topin në vend
+                ball.style.bottom = "10px";
+                ball.style.left = "45%";
+            }, 400);
         }
     </script>
 </body>
