@@ -5,86 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galeria e Florit</title>
     <style>
-        body { margin: 0; padding: 15px; background: #000; color: white; font-family: monospace; text-align: center; }
+        body { margin: 0; padding: 20px; background: #000; color: white; font-family: sans-serif; text-align: center; }
         .container { max-width: 600px; margin: auto; display: flex; flex-direction: column; gap: 20px; }
-        h1 { font-size: 24px; margin-bottom: 5px; color: #fff; font-family: sans-serif; text-shadow: 0 2px 4px rgba(255,255,255,0.2); }
-        .dedication { font-style: italic; color: #ddd; font-size: 15px; margin-bottom: 10px; font-family: sans-serif; }
+        h1 { font-size: 26px; margin-bottom: 5px; color: #fff; text-shadow: 0 2px 4px rgba(255,255,255,0.2); }
+        .dedication { font-style: italic; color: #ddd; font-size: 15px; margin-bottom: 15px; }
         
+        /* Stili dhe efektet e fotove */
         img {
-            width: 100%; border-radius: 20px;
+            width: 100%;
+            border-radius: 20px;
             box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15);
-            display: none; opacity: 0; transform: translateY(20px);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 30px rgba(255, 255, 255, 0.3);
+        }
+        img.loaded {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
             transition: opacity 0.8s ease, transform 0.8s ease;
         }
-        img.loaded { display: block; opacity: 1; transform: translateY(0); }
 
         audio { width: 100%; border-radius: 12px; }
         .audio-box { margin-bottom: 10px; }
-
-        /* Stili i lojës Retro Duck Hunt (Stili nga fotoja) */
-        .game-box {
-            background: #111;
-            border: 3px solid #555;
-            border-radius: 15px;
-            padding: 12px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.9);
-        }
-        .duck-screen {
-            background: #5090ff; /* Qielli blu klasik i Duck Hunt */
-            height: 230px;
-            border-radius: 8px;
-            position: relative;
-            overflow: hidden;
-            border: 2px solid #333;
-            cursor: crosshair;
-        }
-        .duck-bush {
-            position: absolute; bottom: 0; width: 100%; height: 45%;
-            background: #228b22; /* Ferra dhe bari i gjelbër */
-            border-top: 5px solid #145a14;
-        }
-        .duck-tree {
-            position: absolute; bottom: 40%; left: 15%;
-            width: 30px; height: 70px;
-            background: #8b4513; /* Druri i pemës */
-        }
-        .duck-tree-leaves {
-            position: absolute; bottom: 65%; left: 5%;
-            width: 70px; height: 50px; background: #228b22;
-            border-radius: 50%;
-            box-shadow: 20px -10px 0 #228b22;
-        }
-        /* Rosa që fluturon */
-        .duck-target {
-            position: absolute;
-            top: 40px; left: 50px;
-            font-size: 35px;
-            cursor: pointer;
-            transition: top 0.4s ease, left 0.4s ease;
-            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.6));
-        }
-        .duck-dashboard {
-            background: #000;
-            border: 2px solid #444;
-            color: #ffcc00;
-            padding: 8px;
-            font-size: 14px;
-            display: flex;
-            justify-content: space-around;
-            border-radius: 5px;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        /* Futbolli */
-        .goal-field {
-            background: radial-gradient(circle, #2a9d8f 0%, #114b3e 100%);
-            border: 3px solid #fff; height: 140px; border-radius: 10px;
-            position: relative; overflow: hidden; margin-bottom: 8px;
-        }
-        .goalie { font-size: 30px; position: absolute; top: 20px; left: 45%; }
-        .ball { font-size: 24px; position: absolute; bottom: 10px; left: 45%; transition: 0.3s; }
-        .match-btn { background: #00ff88; border: none; padding: 8px 18px; font-weight: bold; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -92,97 +40,16 @@
     <div class="dedication">Kujtimet më të bukura, të përjetësuara me dashuri...</div>
     
     <div class="container">
-        <!-- Muzika -->
+        <!-- Kutia e Muzikes -->
         <div class="audio-box">
             <audio controls autoplay src="flori.mp3"></audio>
         </div>
 
-        <!-- Fotot -->
+        <!-- Fotot me efekte pamore -->
         <img src="foto.jpg" onload="this.classList.add('loaded')">
         <img src="foto1.jpg" onload="this.classList.add('loaded')">
         <img src="foto2.jpg" onload="this.classList.add('loaded')">
         <img src="foto3.jpg" onload="this.classList.add('loaded')">
-
-        <!-- Lojë 1: Duck Hunt Retro (Si në foto) -->
-        <div class="game-box" style="border-color: #ffcc00;">
-            <h3 style="color: #ffcc00; margin-top:0; font-family:sans-serif; font-size:16px;">🦆 DUCK HUNT RETRO</h3>
-            
-            <div class="duck-dashboard">
-                <div>PIKË: <span id="duckScore">0</span></div>
-                <div>PLUMBA: <span id="bullets">5</span> 🎯</div>
-            </div>
-
-            <div class="duck-screen">
-                <div class="duck-tree"></div>
-                <div class="duck-tree-leaves"></div>
-                <div class="duck-bush"></div>
-                <!-- Rosa që preket -->
-                <div class="duck-target" id="duck" onclick="goditRosen()">🦆</div>
-            </div>
-            <p style="font-size: 12px; color: #aaa; margin-top: 8px; font-family:sans-serif;">Prek rosën fluturuese sa më shpejt për të fituar pikë!</p>
-        </div>
-
-        <!-- Lojë 2: Gjuajtje në Portë -->
-        <div class="game-box" style="border-color: #00ff88;">
-            <h3 style="color: #00ff88; margin-top:0; font-family:sans-serif; font-size:16px;">⚽ Gjuajtje në Portë</h3>
-            <div class="goal-field">
-                <div class="goalie" id="goalie">🤸‍♂️</div>
-                <div class="ball" id="ball">⚽</div>
-            </div>
-            <div style="display: flex; justify-content: center; gap: 8px;">
-                <button class="match-btn" onclick="gjuaj(15)">Majtas</button>
-                <button class="match-btn" onclick="gjuaj(45)">Mes</button>
-                <button class="match-btn" onclick="gjuaj(75)">Djathtas</button>
-            </div>
-            <div style="margin-top: 6px; color: #00ff88; font-weight: bold; font-family:sans-serif;">Gola: <span id="goals">0</span></div>
-        </div>
     </div>
-
-    <script>
-        // Logjika e Duck Hunt
-        let duckScore = 0;
-        let bullets = 5;
-
-        function goditRosen() {
-            duckScore += 100;
-            document.getElementById("duckScore").innerText = duckScore;
-            
-            // Rosë e kapur (ndryshon ikonën në shenjë se u qëllua)
-            const duck = document.getElementById("duck");
-            duck.innerText = "💥🦆";
-            
-            setTimeout(() => {
-                // Lëviz në një pozicion të ri në ekran në mënyrë të rastësishme
-                let randomTop = Math.floor(Math.random() * 100) + 20;
-                let randomLeft = Math.floor(Math.random() * 75) + 10;
-                duck.style.top = randomTop + "px";
-                duck.style.left = randomLeft + "%";
-                duck.innerText = "🦆";
-            }, 350);
-        }
-
-        // Lëvizje automatike e rosës herë pas here që të jetë më argëtuese
-        setInterval(() => {
-            const duck = document.getElementById("duck");
-            let randomTop = Math.floor(Math.random() * 100) + 20;
-            let randomLeft = Math.floor(Math.random() * 75) + 10;
-            duck.style.top = randomTop + "px";
-            duck.style.left = randomLeft + "%";
-        }, 2000);
-
-        // Logjika e Futbollit
-        let goals = 0;
-        function gjuaj(dir) {
-            const ball = document.getElementById("ball");
-            ball.style.bottom = "85px";
-            ball.style.left = dir + "%";
-            setTimeout(() => {
-                goals++;
-                document.getElementById("goals").innerText = goals;
-                ball.style.bottom = "10px";
-                ball.style.left = "45%";
-            }, 300);
-        }
-    </script>
 </body>
 </html>
